@@ -130,8 +130,8 @@ public class ParsePushNotificationPlugin extends CordovaPlugin {
 		//Log.d(LOG_TAG, String.format("%b", isTest));		
 		final String applicationId = args.getString(0);
 		final String clientKey = args.getString(1);		
-		Log.d(LOG_TAG, String.format("%s", applicationId));			
-		Log.d(LOG_TAG, String.format("%s", clientKey));
+		//Log.d(LOG_TAG, String.format("%s", applicationId));			
+		//Log.d(LOG_TAG, String.format("%s", clientKey));
 		
 		callbackContextKeepCallback = callbackContext;
 			
@@ -212,6 +212,7 @@ public class ParsePushNotificationPlugin extends CordovaPlugin {
 			//PluginResult pr = new PluginResult(PluginResult.Status.OK, "onRegisterAsPushNotificationClientSucceeded");
 			//pr.setKeepCallback(true);
 			//callbackContextKeepCallback.sendPluginResult(pr);
+            Log.d(LOG_TAG, "onRegisterAsPushNotificationClientFailed");
 			PluginResult pr = new PluginResult(PluginResult.Status.ERROR, "onRegisterAsPushNotificationClientFailed");
 			pr.setKeepCallback(true);
 			callbackContextKeepCallback.sendPluginResult(pr);		
@@ -272,6 +273,7 @@ public class ParsePushNotificationPlugin extends CordovaPlugin {
             		//PluginResult pr = new PluginResult(PluginResult.Status.OK, "onSubscribeToChannelSucceeded");
             		//pr.setKeepCallback(true);
             		//callbackContextKeepCallback.sendPluginResult(pr);
+                    Log.d(LOG_TAG, "onSubscribeToChannelFailed");
             		PluginResult pr = new PluginResult(PluginResult.Status.ERROR, "onSubscribeToChannelFailed");
             		pr.setKeepCallback(true);
             		callbackContextKeepCallback.sendPluginResult(pr);                    
@@ -296,6 +298,7 @@ public class ParsePushNotificationPlugin extends CordovaPlugin {
             		//PluginResult pr = new PluginResult(PluginResult.Status.OK, "onUnsubscribeSucceeded");
             		//pr.setKeepCallback(true);
             		//callbackContextKeepCallback.sendPluginResult(pr);
+                    Log.d(LOG_TAG, "onUnsubscribeFailed");
             		PluginResult pr = new PluginResult(PluginResult.Status.ERROR, "onUnsubscribeFailed");
             		pr.setKeepCallback(true);
             		callbackContextKeepCallback.sendPluginResult(pr);	
