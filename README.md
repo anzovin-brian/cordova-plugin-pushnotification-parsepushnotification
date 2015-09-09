@@ -1,5 +1,9 @@
 Cordova ParsePushNotification plugin
 ====================
+# anzovin-brian's fork #
+
+This version of the plug-in does *not* show a modal dialog upon receiving a push notification in iOS.
+
 # Overview #
 parse push notification
 
