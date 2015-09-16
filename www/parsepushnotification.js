@@ -109,6 +109,16 @@ module.exports = {
             [channel]
         ); 
     },
+    setBadgeNumber: function(badgeNumber) {
+        var self = this;    
+        cordova.exec(
+            null,
+            null,
+            'ParsePushNotificationPlugin',
+            'setBadgeNumber',
+            [badgeNumber]
+        ); 
+    },
 	onRegisterAsPushNotificationClientSucceeded: null,
 	onRegisterAsPushNotificationClientFailed: null,
 /*	

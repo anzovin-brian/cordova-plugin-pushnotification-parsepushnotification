@@ -57,11 +57,20 @@
 }
 
 - (void)unsubscribe: (CDVInvokedUrlCommand *)command {
-	NSString* channel = [command.arguments objectAtIndex:0];
-	NSLog(@"%@", channel);
-	
+    NSString* channel = [command.arguments objectAtIndex:0];
+    NSLog(@"%@", channel);
+    
     [self.commandDelegate runInBackground:^{
-		[self _unsubscribe:channel];
+        [self _unsubscribe:channel];
+    }];
+}
+
+- (void)setBadgeNumber: (CDVInvokedUrlCommand *)command {
+    NSNumber *badgeNumber = [command.arguments objectAtIndex:0];
+    NSLog(@"Setting badge number: %@", badgeNumber);
+    
+    [self.commandDelegate runInBackground:^{
+        [self _setBadgeNumber:badgeNumber];
     }];
 }
 
@@ -146,12 +155,26 @@
     [currentInstallation removeObject:channel forKey:@"channels"];
     [currentInstallation save];
 
-	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onUnsubscribeSucceeded"];
-	[pr setKeepCallbackAsBool:YES];
-	[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
-	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
-	//[pr setKeepCallbackAsBool:YES];
-	//[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
+    CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onUnsubscribeSucceeded"];
+    [pr setKeepCallbackAsBool:YES];
+    [self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
+    //CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+    //[pr setKeepCallbackAsBool:YES];
+    //[self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
+}
+
+- (void) _setBadgeNumber:(NSNumber *)badgeNumber {
+    int badgeNumberValue = badgeNumber.intValue;
+    PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+    
+    if (currentInstallation.badge != badgeNumberValue) {
+        currentInstallation.badge = badgeNumberValue;
+        [currentInstallation saveEventually];
+    }
+    
+    CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"setBadgeNumberSucceeded"];
+    [pr setKeepCallbackAsBool:YES];
+    [self.commandDelegate sendPluginResult:pr callbackId:callbackIdKeepCallback];
 }
 
 @end

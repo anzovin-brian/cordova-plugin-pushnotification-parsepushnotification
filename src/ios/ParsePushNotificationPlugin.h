@@ -15,6 +15,7 @@
 */
 - (void)subscribeToChannel: (CDVInvokedUrlCommand *)command;
 - (void)unsubscribe: (CDVInvokedUrlCommand *)command;
+- (void)setBadgeNumber: (CDVInvokedUrlCommand *)command;
 
 @end
 

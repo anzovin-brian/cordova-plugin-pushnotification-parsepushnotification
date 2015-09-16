@@ -23,7 +23,8 @@ public class ParsePushNotificationPlugin extends CordovaPlugin {
 	private String applicationId;
 	private String clientKey;	
 	//
-	private static boolean destroyed;
+    private static boolean destroyed;
+    private static boolean initialized;
 		
     @Override
 	public void pluginInitialize() {
@@ -70,6 +71,14 @@ public class ParsePushNotificationPlugin extends CordovaPlugin {
     
     public static boolean destroyed() {
     	return destroyed;
+    }
+    
+    public static boolean isInitialized() {
+        return initialized;
+    }
+    
+    public static void setInitialized() {
+        initialized = true;
     }
     
 	@Override
@@ -165,7 +174,6 @@ public class ParsePushNotificationPlugin extends CordovaPlugin {
 
 	private void subscribeToChannel(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		final String channel = args.getString(0);
-		Log.d(LOG_TAG, String.format("%s", channel));
 		
 		cordova.getActivity().runOnUiThread(new Runnable(){
 			@Override
@@ -177,7 +185,6 @@ public class ParsePushNotificationPlugin extends CordovaPlugin {
 
 	private void unsubscribe(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		final String channel = args.getString(0);
-		Log.d(LOG_TAG, String.format("%s",channel));
 		
 		cordova.getActivity().runOnUiThread(new Runnable(){
 			@Override
@@ -192,14 +199,17 @@ public class ParsePushNotificationPlugin extends CordovaPlugin {
 		this.clientKey = clientKey;
 
        try {
-           	Parse.initialize(cordova.getActivity(), applicationId, clientKey);
-    	   	ParseInstallation.getCurrentInstallation().save();
+            if (!ParsePushNotificationPlugin.isInitialized()) {
+               	Parse.initialize(cordova.getActivity(), applicationId, clientKey);
+        	   	ParseInstallation.getCurrentInstallation().save();
+                ParsePushNotificationPlugin.setInitialized();
 
-			SharedPreferences sharedPref = cordova.getActivity().getSharedPreferences("cordova-plugin-pushnotification-parse", Context.MODE_PRIVATE);
-			SharedPreferences.Editor editor = sharedPref.edit();
-			editor.putString("applicationId", applicationId);
-			editor.putString("clientKey", clientKey);
-			editor.commit();
+    			SharedPreferences sharedPref = cordova.getActivity().getSharedPreferences("cordova-plugin-pushnotification-parse", Context.MODE_PRIVATE);
+    			SharedPreferences.Editor editor = sharedPref.edit();
+    			editor.putString("applicationId", applicationId);
+    			editor.putString("clientKey", clientKey);
+    			editor.commit();
+            }
 		
 			PluginResult pr = new PluginResult(PluginResult.Status.OK, "onRegisterAsPushNotificationClientSucceeded");
 			pr.setKeepCallback(true);

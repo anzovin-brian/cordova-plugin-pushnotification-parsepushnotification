@@ -10,16 +10,18 @@ import com.parse.Parse;
 import com.parse.ParseInstallation;
 
 public class ParseBroadcastReceiver extends BroadcastReceiver {
+    private static final String LOG_TAG = "ParsePushNotificationPlugin";
 
     @Override
     public void onReceive(Context context, Intent intent) {
-
-		if (ParsePushNotificationPlugin.destroyed()) {
+		if (ParsePushNotificationPlugin.destroyed() || !ParsePushNotificationPlugin.isInitialized()) {
 			SharedPreferences sharedPref = context.getApplicationContext().getSharedPreferences("cordova-plugin-pushnotification-parse", Context.MODE_PRIVATE);
 			String applicationId = sharedPref.getString("applicationId", "");
 			String clientKey = sharedPref.getString("clientKey", "");
 			Parse.initialize(context.getApplicationContext(), applicationId, clientKey);
 			ParseInstallation.getCurrentInstallation().saveInBackground();
+            ParsePushNotificationPlugin.setInitialized();
 		}
     }
+    
 }
