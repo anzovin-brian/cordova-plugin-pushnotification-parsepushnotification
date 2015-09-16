@@ -4,6 +4,8 @@ Cordova ParsePushNotification plugin
 
 This version of the plug-in does *not* show a modal dialog upon receiving a push notification in iOS.
 
+It also has a new Javascript method for setting the badge number for an iOS app (though currently no method for getting the current badge number), and a fix for a crash in Android that occurs when the user terminates the app manually.
+
 # Overview #
 parse push notification
 
