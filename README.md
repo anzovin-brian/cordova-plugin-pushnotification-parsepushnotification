@@ -6,6 +6,13 @@ This version of the plug-in does *not* show a modal dialog upon receiving a push
 
 It also has a new Javascript method for setting the badge number for an iOS app (though currently no method for getting the current badge number), and a fix for a crash in Android that occurs when the user terminates the app manually.
 
+If you'd like to use this fork of the plug-in, you'll want to install it in your Cordova project using the following:
+```c
+cordova plugin add https://github.com/anzovin-brian/cordova-plugin-pushnotification-parsepushnotification
+```
+
+The remainder of the read me file will now continue as it was in the original repo.
+
 # Overview #
 parse push notification
 
