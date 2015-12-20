@@ -89,7 +89,7 @@ public class ParsePushNotificationPlugin extends CordovaPlugin {
 
 			return true;
 		}			
-/*		
+/*		ge
 		else if (action.equals("registerAsPushNotificationClient")) {
 			registerAsPushNotificationClient(action, args, callbackContext);
 			
@@ -200,7 +200,7 @@ public class ParsePushNotificationPlugin extends CordovaPlugin {
 
        try {
             if (!ParsePushNotificationPlugin.isInitialized()) {
-               	Parse.initialize(cordova.getActivity(), applicationId, clientKey);
+               	Parse.initialize(cordova.getActivity().getApplication(), applicationId, clientKey);
         	   	ParseInstallation.getCurrentInstallation().save();
                 ParsePushNotificationPlugin.setInitialized();
 
